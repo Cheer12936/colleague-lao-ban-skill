@@ -1,39 +1,61 @@
-# 老板 Skill
+# 老板 Skills
 
-面向少儿眼视光、儿童近视防控、视功能分析与专业内容创作的 Codex 人物 Skill。
+原来的单体“老板 Skill”已经拆成两个职责单一的 Skill：一个只负责把内容写好，一个只负责把内容审严。这样可以避免改稿时夹带长篇审核，也能避免审稿时擅自重写全文。
 
-## 主要能力
+## 1. lao-ban-script-writer
 
-- 少儿验光与配镜数据分析
-- 视功能检查、分析和训练方案审核
-- 儿童近视防控与复查管理
-- 防控镜片、训练工具和辅助产品的适配评估
-- 面向家长、验光师的专业科普、案例复盘和短视频文案
-- 以“果断、高标准、重细节”的老板表达方式审稿和给出判断
+负责内容生产与表达：
 
-## 工作原则
+- 写稿、改稿、洗稿和口语化
+- 模仿“老板”的直接、具体、高标准语气
+- 设计短视频标题、钩子和开头
+- 保留原意，清理转写错误、重复和机械套话
+- 用确定性检测拦截重复的“不是……而是……”及常见 AI 套话
 
-- 信息和数据没有查完整时，不急着下结论。
-- 先找主要短板，再决定方案顺序。
-- 产品、训练和处方建议必须写清适用条件、风险与复查节点。
-- 医疗内容需要核验权威资料，不远程替代医生或线下检查。
-- 标题承诺必须能被正文兑现。
-- Correction 层规则优先，主动控制模板化反转句、工整排比和通用 AI 套话。
+不负责专业事实审核。遇到可疑数据、医学结论或政策表述时，只标记为“待审核”。
+
+## 2. lao-ban-content-reviewer
+
+负责发布前审核：
+
+- 检查专业错误和事实风险
+- 检查前提、因果、结论和例外条件
+- 判断标题是否夸大、是否能被正文兑现
+- 找出适用人群、风险、边界、数据来源等信息缺口
+- 给出“可发 / 修改后可发 / 不能发”的明确结论
+
+默认不重写全文，只给问题、理由和修改方向。
+
+## 推荐工作流
+
+先调用 `$lao-ban-script-writer` 完成稿件，再调用 `$lao-ban-content-reviewer` 做发布前审核。审核退回后，只把明确的问题交回写稿 Skill 修改。
 
 ## 安装
 
 Windows PowerShell：
 
 ```powershell
-git clone https://github.com/Cheer12936/colleague-lao-ban-skill.git "$env:USERPROFILE\.codex\skills\colleague-lao-ban"
+git clone https://github.com/Cheer12936/colleague-lao-ban-skill.git "$env:USERPROFILE\.codex\skills\lao-ban-skills"
 ```
 
-安装后重新载入 Codex，在任务中明确要求使用 `colleague-lao-ban` Skill。
+重新载入 Codex 后，可以分别使用：
 
-## 文件
+- `$lao-ban-script-writer`
+- `$lao-ban-content-reviewer`
 
-- `SKILL.md`：完整 Skill 定义
-- `README.md`：仓库说明与安装方式
+如果安装过旧版 `colleague-lao-ban`，请先停用旧版，避免多个 Skill 同时响应。
+
+## 仓库结构
+
+```text
+lao-ban-script-writer/
+  SKILL.md
+  agents/openai.yaml
+  scripts/style_lint.py
+lao-ban-content-reviewer/
+  SKILL.md
+  agents/openai.yaml
+```
 
 ## 许可
 

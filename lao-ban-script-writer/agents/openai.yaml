@@ -1,0 +1,4 @@
+interface:
+  display_name: "老板写稿"
+  short_description: "负责写稿、改稿、口语化、语气模仿、标题与开头整体设计"
+  default_prompt: "使用 $lao-ban-script-writer 把这篇稿子改成自然口语，并给出标题和开头。"
